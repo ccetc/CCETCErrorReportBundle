@@ -1,6 +1,6 @@
 <?php
 
-namespace GJGNY\DataToolBundle\Entity;
+namespace CCETC\ErrorReportBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

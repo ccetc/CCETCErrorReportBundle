@@ -1,14 +1,14 @@
 <?php
 
-namespace GJGNY\DataToolBundle\Entity;
+namespace CCETC\ErrorReportBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * GJGNY\DataToolBundle\Entity\ErrorReport
+ * CCETC\ErrorReportBundle\Entity\ErrorReport
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="GJGNY\DataToolBundle\Entity\ErrorReportRepository")
+ * @ORM\Entity(repositoryClass="CCETC\ErrorReportBundle\Entity\ErrorReportRepository")
  */
 class ErrorReport
 {
