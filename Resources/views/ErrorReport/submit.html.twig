@@ -1,17 +1,22 @@
 {% extends base_layout %}
 
-{#{% block breadcrumb %}
-    <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
-    Help
-{% endblock %}#}
-
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/ccetcerrorreport/form.css') }}" type="text/css" media="all">
 {% endblock %}
 
+{% block breadcrumb %}
+    <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
+    Help
+{% endblock %}
+
 
 {% block content %}
+
+{% if heading_block is not defined%}
+    <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
+    Help
+{% endif %}
 
 <div class="help">
   <div class="temp_help">

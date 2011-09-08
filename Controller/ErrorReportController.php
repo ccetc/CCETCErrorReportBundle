@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Controller\CoreController;
 class ErrorReportController extends CoreController
 {
 
-    public function errorReportAction($baseLayout)
+    public function errorReportAction($headingBlock = null, $flash = 'message', $redirect = 'home', $baseLayout)
     {
         // TODO: get support email from config
 //    $supportEmail = $this->get('gjgny')->supportEmail;
@@ -21,7 +21,7 @@ class ErrorReportController extends CoreController
                     'label' => 'Enter your e-mail address if you would like to be contacted about this error.',
                     'required' => false
                 ))
-                ->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you are experiencing.'))
+                ->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you have.'))
                 ->getForm();
 
         $request = $this->get('request');
@@ -44,21 +44,17 @@ class ErrorReportController extends CoreController
                 $em->persist($errorReport);
                 $em->flush();
 
-                $session->setFlash('adminMessage', 'Your report has been submitted.  Thank you');
+                $session->setFlash($flash, 'Your report has been submitted.  Thank you');
 
-                // TODO: return home
-                return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', array(
-                    'errorReportForm' => $form->createView(),
-                    'supportEmail' => $supportEmail,
-                    'base_layout' => $baseLayout
-                ));
+                return $this->redirect($this->generateUrl($redirect));
             }
             else
             {
                 return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', array(
                     'errorReportForm' => $form->createView(),
                     'supportEmail' => $supportEmail,
-                    'base_layout' => $baseLayout
+                    'base_layout' => $baseLayout,
+                    'heading_block' => $headingBlock,
                 ));
             }
         }
@@ -67,7 +63,8 @@ class ErrorReportController extends CoreController
             return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', array(
                 'errorReportForm' => $form->createView(),
                 'supportEmail' => $supportEmail,
-                'base_layout' => $baseLayout
+                'base_layout' => $baseLayout,
+                'heading_block' => $headingBlock,
             ));
         }
     }
