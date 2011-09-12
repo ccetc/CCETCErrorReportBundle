@@ -52,6 +52,7 @@ div#error-report-heading {
 div#error-report-form-container {
     width: 600px;
     margin: 0 auto 20px auto;
+    overflow: auto;
 
     -webkit-border-bottom-right-radius: 7px;
     -webkit-border-bottom-left-radius: 7px;

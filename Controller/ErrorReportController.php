@@ -10,12 +10,10 @@ use Sonata\AdminBundle\Controller\CoreController;
 class ErrorReportController extends CoreController
 {
 
-    public function errorReportAction($headingBlock = null, $flash = 'message', $redirect = 'home', $baseLayout)
+    public function errorReportAction($headingBlock = null, $flash = 'message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
-        // TODO: get support email from config
-//    $supportEmail = $this->get('gjgny')->supportEmail;
-        $supportEmail = "haggertypat@gmail.com";
-
+        $supportEmail = $this->get('errorReports')->supportEmail;
+        
         $form = $this->createFormBuilder()
                 ->add('email', 'text', array(
                     'label' => 'Enter your e-mail address if you would like to be contacted about this error: ',
@@ -55,6 +53,7 @@ class ErrorReportController extends CoreController
                     'supportEmail' => $supportEmail,
                     'base_layout' => $baseLayout,
                     'heading_block' => $headingBlock,
+                    'formRoute' => $formRoute
                 ));
             }
         }
@@ -65,6 +64,7 @@ class ErrorReportController extends CoreController
                 'supportEmail' => $supportEmail,
                 'base_layout' => $baseLayout,
                 'heading_block' => $headingBlock,
+                    'formRoute' => $formRoute
             ));
         }
     }
