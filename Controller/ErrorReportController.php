@@ -18,7 +18,7 @@ class ErrorReportController extends CoreController
 
         $form = $this->createFormBuilder()
                 ->add('email', 'text', array(
-                    'label' => 'Enter your e-mail address if you would like to be contacted about this error.',
+                    'label' => 'Enter your e-mail address if you would like to be contacted about this error: ',
                     'required' => false
                 ))
                 ->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you have.'))

@@ -1,38 +1,40 @@
 {% extends base_layout %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    {#{{ parent() }}#}
     <link rel="stylesheet" href="{{ asset('bundles/ccetcerrorreport/form.css') }}" type="text/css" media="all">
 {% endblock %}
 
-{% block breadcrumb %}
+{#{% block breadcrumb %}
     <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
     Help
-{% endblock %}
+{% endblock %}#}
 
 
 {% block content %}
 
-{% if heading_block is not defined%}
-    <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
-    Help
-{% endif %}
+<div id="error-report-container">
+{#{% if heading_block is not defined%}#}
+    <h2>
+        <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
+        Help
+    </h2>
+{#{% endif %}#}
 
-<div class="help">
-  <div class="temp_help">
+  <div class="error-report-description-container">
     <h2>Having trouble with something?</h2>
     <span>You can <a href="mailto:{{ supportEmail }}">contact us directly</a> with a question, or submit an error report below.</span>
   </div>
 
 
-  <div class="error_form_heading content_container">
+  <div id="error-report-heading" class="error-report-box">
     Error Report
     <div class="clear"></div>
   </div>
 
-  <div class="general_error_report content_container">
+  <div id="error-report-form-container" class="error-report-box">
 
-    <form id="submit_report" class="standard" method="POST" action="{{ path('help') }} {{ form_enctype(errorReportForm) }}">
+    <form id="error-report-form" class="standard" method="POST" action="{{ path('help') }} {{ form_enctype(errorReportForm) }}">
       
       {{ form_widget(errorReportForm) }}
       
