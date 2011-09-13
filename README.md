@@ -15,7 +15,7 @@ and run:
 
         bin/vendors install
 
-If you are using git, you can instead add them as submodules::
+If you are using git, you can instead add them as submodules:
 
         git submodule add git://github.com/CCETC/ErrorReportBundle.git vendor/bundles/CCETC/ErrorReportBundle
 
@@ -40,7 +40,7 @@ To add a page with an error report form add a route to routing.yml:
                 defaults: { _controller: CCETCErrorReportBundle:ErrorReport:errorReport, headingBlock: content, flash: message, redirect: home, baseLayout: ::layout.html.twig, formRoute: frontendHelp }
 
 
-# Options
+### Route Options
 * headingBlock: the name of block that the heading with the text "Help" and question mark icon should be placed.  Default: content
 * flash: name of the flash for the success message. Default: message
 * redirect: route to redirect to on success. Default: home
