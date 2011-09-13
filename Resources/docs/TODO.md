@@ -1,11 +1,12 @@
 TODO
 ====================
 
-# 1.    Template
+# 2.0
 
-        - use heading_block
+        1. Incorporate into error pages (404 and generic error)
 
+                - allow for custom error message over error report
+                
+        2. Add an Admin Interface for error reports
 
-# 2.    Incorporate into error pages (404 and generic error).
-
-        - allow for custom error message over error report
+        3. E-mail notifications

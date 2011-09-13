@@ -5,20 +5,21 @@
     <link rel="stylesheet" href="{{ asset('bundles/ccetcerrorreport/form.css') }}" type="text/css" media="all">
 {% endblock %}
 
-{#{% block breadcrumb %}
-    <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
-    Help
-{% endblock %}#}
-
+{% if includeBreadcrumb %}
+        {% block breadcrumb %}
+            <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
+            Help
+        {% endblock %}
+{% endif %}
 
 {% block content %}
 <div id="error-report-container">
-{#{% if heading_block is not defined%}#}
+   {% if not includeBreadcrumb %}
     <h2>
         <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
         Help
     </h2>
-{#{% endif %}#}
+  {% endif %}
 
   <div class="error-report-description-container">
     <h2>Having trouble with something?</h2>

@@ -5,12 +5,11 @@ namespace CCETC\ErrorReportBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sonata\AdminBundle\Controller\CoreController;
 
-class ErrorReportController extends CoreController
+class ErrorReportController extends Controller
 {
 
-    public function errorReportAction($headingBlock = null, $flash = 'message', $redirect = 'home', $baseLayout, $formRoute = 'help')
+    public function errorReportAction($includeBreadcrumb = false, $flash = 'message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
         $supportEmail = $this->get('errorReports')->supportEmail;
         
@@ -52,7 +51,7 @@ class ErrorReportController extends CoreController
                     'errorReportForm' => $form->createView(),
                     'supportEmail' => $supportEmail,
                     'base_layout' => $baseLayout,
-                    'heading_block' => $headingBlock,
+                    'includeBreadcrumb' => $includeBreadcrumb,
                     'formRoute' => $formRoute
                 ));
             }
@@ -63,8 +62,8 @@ class ErrorReportController extends CoreController
                 'errorReportForm' => $form->createView(),
                 'supportEmail' => $supportEmail,
                 'base_layout' => $baseLayout,
-                'heading_block' => $headingBlock,
-                    'formRoute' => $formRoute
+                'includeBreadcrumb' => $includeBreadcrumb,
+                'formRoute' => $formRoute
             ));
         }
     }
