@@ -47,5 +47,5 @@ To add a page with an error report form add a route to routing.yml:
 * baseLayout: the layout to extend
 * formRoute: the name of this route, used to redirect on errors
 
-*Note:*
+####Note:
 the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
