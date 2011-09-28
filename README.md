@@ -10,15 +10,15 @@ To install as a Symfony vendor, add the following lines to the file ``deps``:
         [ErrorReportBundle]
                 git=https://github.com/CCETC/ErrorReportBundle.git
                 target=/bundles/CCETC/ErrorReportBundle
-      
-and run:
-
-        bin/vendors install
+                
 
 If you are using git, you can instead add them as submodules:
 
-        git submodule add git://github.com/CCETC/ErrorReportBundle.git vendor/bundles/CCETC/ErrorReportBundle
+        git submodule add git@github.com:CCETC/ErrorReportBundle.git vendor/bundles/CCETC/ErrorReportBundle
 
+Install assets:
+
+        bin/vendors install
 
 Add the following lines to your services config.yml:
 
