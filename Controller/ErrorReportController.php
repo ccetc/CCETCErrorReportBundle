@@ -13,14 +13,21 @@ class ErrorReportController extends Controller
     {
         $supportEmail = $this->get('errorReports')->supportEmail;
         
-        $form = $this->createFormBuilder()
-                ->add('email', 'text', array(
-                    'label' => 'Enter your e-mail address if you would like to be contacted about this error: ',
-                    'required' => false
-                ))
-                ->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you have.'))
-                ->getForm();
+        $form = $this->createFormBuilder();
+        
+        if(!$this->get('security.context')->isGranted('ROLE_USER'))
+        {
+            $form->add('email', 'text', array(
+                'label' => 'Enter your e-mail address if you would like to be contacted about this error: ',
+                'required' => false
+            ));
+        }
+        
+        $form->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you have.'));
 
+        
+        $form = $form->getForm();
+        
         $request = $this->get('request');
 
         if($request->getMethod() == 'POST')
