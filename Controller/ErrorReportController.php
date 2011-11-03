@@ -23,7 +23,7 @@ class ErrorReportController extends Controller
             ));
         }
         
-        $form->add('content', 'textarea', array('label' => 'Please enter a description of the problem that you have.'));
+        $form->add('content', 'textarea', array('label' => 'Please enter a description of this error.'));
 
         
         $form = $form->getForm();

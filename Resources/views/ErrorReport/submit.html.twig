@@ -2,46 +2,51 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/ccetcerrorreport/form.css') }}" type="text/css" media="all">
 {% endblock %}
 
 {% if includeBreadcrumb %}
         {% block breadcrumb %}
-            <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
             Help
         {% endblock %}
 {% endif %}
 
 {% block content %}
-<div id="error-report-container">
-   {% if not includeBreadcrumb %}
-    <h1>
-        <img src="{{ asset('bundles/ccetcerrorreport/images/Help.png') }}" />
-        Help
-    </h1>
-  {% endif %}
+    <div class="row">
+        <div class="span16">
+        {% if not includeBreadcrumb %}
+            <h1>
+                Help
+            </h1>
+        {% endif %}
 
-  <div class="error-report-description-container">
-    <h2>Having trouble with something?</h2>
-    <span>You can <a href="mailto:{{ supportEmail }}">contact us directly</a> with a question, or submit an error report below.</span>
-  </div>
+        <h3>Having trouble with something?        <small>You can <a href="mailto:{{ supportEmail }}">contact us directly</a> with a question, or submit an error report below.</small></h3>
+        </div>
+    </div>
 
+    <div class="row">
+        <form id="error-report-form" class="form-stacked span10 offset3" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
+            <fieldset>
+            {% if not is_granted('ROLE_USER') %}
+                <div class="clearfix">
+                    {{ form_label(errorReportForm.email) }}
+                    <div class="input">
+                        {{ form_widget(errorReportForm.email, { 'attr': {'class': 'span10'} }) }}
+                    </div>
+                </div><!-- /clearfix -->
+            {% endif %}
 
-  <div id="error-report-heading" class="error-report-box">
-    Error Report
-    <div class="clear"></div>
-  </div>
+            <div class="clearfix">
+                {{ form_label(errorReportForm.content) }}
+                <div class="input">
+                    {{ form_widget(errorReportForm.content, { 'attr': {'class': 'span10'} }) }}
+                </div>
+            </div><!-- /clearfix -->
+            </fieldset>
 
-  <div id="error-report-form-container" class="error-report-box">
+            <div class="actions">
+                <input type="submit" class="btn large primary" value="Submit" />
+            </div>
 
-    <form id="error-report-form" class="standard" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
-      
-      {{ form_widget(errorReportForm) }}
-      
-      <input type="submit" class="button large" value="Submit" />
-
-    </form>
-    <div class="clear"></div>
-  </div>
-</div>
+        </form>
+    </div>
 {% endblock %}
