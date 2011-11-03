@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ErrorReportController extends Controller
 {
 
-    public function errorReportAction($includeBreadcrumb = false, $flash = 'message', $redirect = 'home', $baseLayout, $formRoute = 'help')
+    public function errorReportAction($includeBreadcrumb = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
         $supportEmail = $this->get('errorReports')->supportEmail;
         

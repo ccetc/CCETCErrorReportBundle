@@ -25,7 +25,10 @@
 
     <div class="row">
         <form id="error-report-form" class="form-stacked span10 offset3" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
-            <fieldset>
+            {% if form_errors(errorReportForm) %}
+                <div class="alert-message">{{ form_errors(errorReportForm) }}</div>
+            {% endif %}
+             <fieldset>
             {% if not is_granted('ROLE_USER') %}
                 <div class="clearfix">
                     {{ form_label(errorReportForm.email) }}
@@ -42,7 +45,9 @@
                 </div>
             </div><!-- /clearfix -->
             </fieldset>
-
+            
+            {{ form_rest(errorReportForm) }}
+            
             <div class="actions">
                 <input type="submit" class="btn large primary" value="Submit" />
             </div>
