@@ -4,8 +4,8 @@
     {{ parent() }}
 {% endblock %}
 
-{% if includeBreadcrumb %}
-        {% block breadcrumb %}
+{% if usePageHeader %}
+        {% block page_header %}
             Help
         {% endblock %}
 {% endif %}
@@ -13,7 +13,7 @@
 {% block content %}
     <div class="row">
         <div class="span16">
-        {% if not includeBreadcrumb %}
+        {% if not usePageHeader %}
             <h1>
                 Help
             </h1>

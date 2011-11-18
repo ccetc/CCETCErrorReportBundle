@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ErrorReportController extends Controller
 {
 
-    public function errorReportAction($includeBreadcrumb = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
+    public function errorReportAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
         $supportEmail = $this->get('errorReports')->supportEmail;
         
@@ -41,9 +41,19 @@ class ErrorReportController extends Controller
 
                 $errorReport = new \CCETC\ErrorReportBundle\Entity\ErrorReport();
                 $errorReport->setContent($data['content']);
-                $errorReport->setWriterEmail($data['email']);
                 $errorReport->setDatetimeReported(new \DateTime());
 
+                if(!$this->get('security.context')->isGranted('ROLE_USER'))
+                {
+                    $errorReport->setWriterEmail($data['email']);
+                }
+                else
+                {
+                    $errorReport->setWriterEmail($this->get('security.context')->getToken()->getUser()->getEmail());
+                }
+
+                
+                
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($errorReport);
                 $em->flush();
@@ -58,7 +68,7 @@ class ErrorReportController extends Controller
                     'errorReportForm' => $form->createView(),
                     'supportEmail' => $supportEmail,
                     'base_layout' => $baseLayout,
-                    'includeBreadcrumb' => $includeBreadcrumb,
+                    'usePageHeader' => $usePageHeader,
                     'formRoute' => $formRoute
                 ));
             }
@@ -69,7 +79,7 @@ class ErrorReportController extends Controller
                 'errorReportForm' => $form->createView(),
                 'supportEmail' => $supportEmail,
                 'base_layout' => $baseLayout,
-                'includeBreadcrumb' => $includeBreadcrumb,
+                'usePageHeader' => $usePageHeader,
                 'formRoute' => $formRoute
             ));
         }
