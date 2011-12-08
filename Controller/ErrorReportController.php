@@ -74,7 +74,15 @@ class ErrorReportController extends Controller
                 
                 $session->setFlash($flash, 'Your report has been submitted.  Thank you');
 
-                return $this->redirect($this->generateUrl($redirect));
+                if(!$this->get('security.context')->isGranted('ROLE_USER'))
+                {                
+                    return $this->redirect($this->generateUrl('fos_user_security_login'));
+                }
+                else
+                {
+                    return $this->redirect($this->generateUrl($redirect));                    
+                }
+                
             }
             else
             {
