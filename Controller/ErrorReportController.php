@@ -58,6 +58,20 @@ class ErrorReportController extends Controller
                 $em->persist($errorReport);
                 $em->flush();
 
+                $message = \Swift_Message::newInstance()
+                        ->setSubject('Error Report Submitted')
+                        ->setFrom($this->container->getParameter('fos_user.registration.confirmation.from_email'))
+                        ->setTo($supportEmail)
+                        ->setContentType('text/html')
+                        ->setBody('<html>
+                           '.$errorReport->getWriterEmail().' submitted an error report on '.$errorReport->getDatetimeReported()->format('Y-m-d H:i:s').':<br/>
+                            '.$errorReport->getContent().'</html>')
+                           
+                ;
+                $this->get('mailer')->send($message);
+
+                
+                
                 $session->setFlash($flash, 'Your report has been submitted.  Thank you');
 
                 return $this->redirect($this->generateUrl($redirect));

@@ -74,26 +74,6 @@ class ErrorReport
     }
 
     /**
-     * Set date_reported
-     *
-     * @param datetime $dateReported
-     */
-    public function setDateReported($dateReported)
-    {
-        $this->dateReported = $dateReported;
-    }
-
-    /**
-     * Get date_reported
-     *
-     * @return datetime $dateReported
-     */
-    public function getDateReported()
-    {
-        return $this->dateReported;
-    }
-
-    /**
      * Set content
      *
      * @param text $content
