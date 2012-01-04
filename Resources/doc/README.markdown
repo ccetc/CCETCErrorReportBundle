@@ -1,5 +1,4 @@
-ErrorReportBundle
-=========
+# CCETCErrorReportBundle - README
 
 Provides an interface for the submission of simple text+e-mail "error reports".
 Used on all front and back ends of CCETC web applications.
