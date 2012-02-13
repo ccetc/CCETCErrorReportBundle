@@ -5,3 +5,4 @@
 	- allow for custom error message over error report    
 2.	Add an Admin Interface for error reports
 3.	Better E-mail notifications to admins
+4.      Incorporate user relation

@@ -52,8 +52,6 @@ class ErrorReportController extends Controller
                     $errorReport->setWriterEmail($this->get('security.context')->getToken()->getUser()->getEmail());
                 }
 
-                
-                
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($errorReport);
                 $em->flush();
@@ -82,29 +80,23 @@ class ErrorReportController extends Controller
                 {
                     return $this->redirect($this->generateUrl($redirect));                    
                 }
-                
-            }
-            else
-            {
-                return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', array(
-                    'errorReportForm' => $form->createView(),
-                    'supportEmail' => $supportEmail,
-                    'base_layout' => $baseLayout,
-                    'usePageHeader' => $usePageHeader,
-                    'formRoute' => $formRoute
-                ));
             }
         }
-        else
-        {
-            return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', array(
-                'errorReportForm' => $form->createView(),
-                'supportEmail' => $supportEmail,
-                'base_layout' => $baseLayout,
-                'usePageHeader' => $usePageHeader,
-                'formRoute' => $formRoute
-            ));
+        
+        $templateParameters = array(
+            'errorReportForm' => $form->createView(),
+            'supportEmail' => $supportEmail,
+            'base_layout' => $baseLayout,
+            'usePageHeader' => $usePageHeader,
+            'formRoute' => $formRoute
+        );
+        
+        if(class_exists('Sonata\AdminBundle\SonataAdminBundle')) {
+            $adminPool = $this->container->get('sonata.admin.pool');
+            $templateParameters['admin_pool'] = $adminPool;
         }
+
+        return $this->render('CCETCErrorReportBundle:ErrorReport:submit.html.twig', $templateParameters);
     }
 
 }

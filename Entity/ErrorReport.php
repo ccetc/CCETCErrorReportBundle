@@ -3,7 +3,6 @@
 namespace CCETC\ErrorReportBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * CCETC\ErrorReportBundle\Entity\ErrorReport
  *
