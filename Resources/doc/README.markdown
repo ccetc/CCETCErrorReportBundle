@@ -48,3 +48,6 @@ To add a page with an error report form add a route to routing.yml:
 
 ####Note:
 the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
+
+## Documentation
+All ISSUES, IDEAS, and FEATURES are documented on the [trello board](https://trello.com/board/errorreportbundle/4f9014c7c9fa68b12a0cdb13).
