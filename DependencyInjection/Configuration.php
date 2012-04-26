@@ -15,6 +15,9 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('support_email')->cannotBeEmpty()->end()
             ->end()
+            ->children()
+                ->scalarNode('direct_email_subject')->defaultvalue("Error Report")->end()
+            ->end()                
         ;
 
         return $treeBuilder;

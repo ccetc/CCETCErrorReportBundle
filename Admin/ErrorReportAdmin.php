@@ -21,7 +21,7 @@ class ErrorReportAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-                ->add('writerEmail')
+                ->add('userSubmittedBy', 'string', array('label' => 'Submitted By', 'template' => 'CCETCErrorReportBundle:ErrorReport:_submittedBy.html.twig'))
                 ->add('datetimeReported')
                 ->add('content')		
                 ->add('spam')
@@ -73,17 +73,19 @@ class ErrorReportAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-                ->add('writerEmail')
-                ->add('datetimeReported')
-                ->add('content')
-                ->add('spam')
-                ->add('open')
+                ->add('writerEmail', null, array('required' => false))
+                ->add('userSubmittedBy', null, array('label' => 'User', 'required' => false))
+                ->add('datetimeReported', null, array('label' => 'Datetime Reported', 'required' => false, 'date_format' => 'MM/dd/yyyy'))
+                ->add('content', null, array('required' => false))
+                ->add('spam', null, array('required' => false))
+                ->add('open', null, array('required' => false))
 		;
     }
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper
                 ->add('writerEmail')
+                ->add('userSubmittedBy', null, array('label' => 'User'))
                 ->add('datetimeReported')
                 ->add('content')
                 ->add('spam')

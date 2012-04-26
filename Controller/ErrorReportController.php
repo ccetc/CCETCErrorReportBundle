@@ -12,6 +12,7 @@ class ErrorReportController extends Controller
     public function errorReportAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
+        $directEmailSubject = $this->container->getParameter('ccetc_error_report.direct_email_subject');
         
         $form = $this->createFormBuilder();
         
@@ -42,28 +43,37 @@ class ErrorReportController extends Controller
                 $errorReport = new \CCETC\ErrorReportBundle\Entity\ErrorReport();
                 $errorReport->setContent($data['content']);
                 $errorReport->setDatetimeReported(new \DateTime());
-
+                $errorReport->setOpen(true);
+                $errorReport->setSpam(false);
+                
                 if(!$this->get('security.context')->isGranted('ROLE_USER'))
                 {
                     $errorReport->setWriterEmail($data['email']);
+                    $who = 'An anonymous user';
+                    if($data['email']) $who .= ' (email: <a href="'.$data['email'].'">'.$data['email'].'</a>)';
                 }
                 else
                 {
-                    $errorReport->setWriterEmail($this->get('security.context')->getToken()->getUser()->getEmail());
+                    $user = $this->get('security.context')->getToken()->getUser();
+                    $errorReport->setUserSubmittedBy($user);
+                    $who = 'A user named "'.$user->__toString().'" (email: <a href="'.$user->getEmail().'">'.$user->getEmail().'</a>)';
                 }
 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($errorReport);
                 $em->flush();
 
+           
+                
+                
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Error Report Submitted')
                         ->setFrom($this->container->getParameter('fos_user.registration.confirmation.from_email'))
                         ->setTo($supportEmail)
                         ->setContentType('text/html')
                         ->setBody('<html>
-                           '.$errorReport->getWriterEmail().' submitted an error report on '.$errorReport->getDatetimeReported()->format('Y-m-d H:i:s').':<br/>
-                            '.$errorReport->getContent().'</html>')
+                           '.$who.' submitted this error report on '.$errorReport->getDatetimeReported()->format('Y-m-d H:i:s').'.<br/><br/>
+                            Content: <br/>'.$errorReport->getContent().'</html>')
                            
                 ;
                 $this->get('mailer')->send($message);
@@ -86,7 +96,8 @@ class ErrorReportController extends Controller
             'supportEmail' => $supportEmail,
             'base_layout' => $baseLayout,
             'usePageHeader' => $usePageHeader,
-            'formRoute' => $formRoute
+            'formRoute' => $formRoute,
+            'directEmailSubject' => $directEmailSubject
         );
         
         if(class_exists('Sonata\AdminBundle\SonataAdminBundle')) {

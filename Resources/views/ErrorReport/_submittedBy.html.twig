@@ -1,0 +1,15 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    <div>
+    	{% if object.userSubmittedBy %}
+            {% if field_description.hasAssociationAdmin and field_description.associationadmin.hasRoute('show') and field_description.associationadmin.isGranted('VIEW') %}
+                <a href="{{ field_description.associationadmin.generateObjectUrl('show', value) }}">{{ value|render_relation_element(field_description) }}</a>
+            {% else %}
+                {{ object.userSubmittedBy }} - <a href="mailto:{{ object.userSubmittedBy.email }}">{{ object.userSubmittedBy.email }}</a>
+            {% endif %}
+        {% else %}
+            <a href="mailto:{{ object.writerEmail }}">{{ object.writerEmail }}</a>
+        {% endif %}
+    </div>
+{% endblock %}

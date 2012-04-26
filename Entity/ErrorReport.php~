@@ -52,8 +52,19 @@ class ErrorReport
     * @ORM\Column(name="spam", type="boolean", nullable="true")
     */
     private $spam;
+    
+    /** @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="errorReportsSubmitted")
+    *  @ORM\JoinColumn(name="userSubmittedBy_id", referencedColumnName="id", onDelete="SET NULL") 
+    */
+    protected $userSubmittedBy;
 
 
+    public function __toString()
+    {
+        return $this->getWriterEmail().' - '.$this->datetimeReported->format("m/d/y h:i:s");
+    }
+    
+    
     /**
      * Get id
      *
@@ -122,5 +133,45 @@ class ErrorReport
     public function getDatetimeReported()
     {
         return $this->datetimeReported;
+    }
+
+    /**
+     * Set open
+     *
+     * @param boolean $open
+     */
+    public function setOpen($open)
+    {
+        $this->open = $open;
+    }
+
+    /**
+     * Get open
+     *
+     * @return boolean 
+     */
+    public function getOpen()
+    {
+        return $this->open;
+    }
+
+    /**
+     * Set spam
+     *
+     * @param boolean $spam
+     */
+    public function setSpam($spam)
+    {
+        $this->spam = $spam;
+    }
+
+    /**
+     * Get spam
+     *
+     * @return boolean 
+     */
+    public function getSpam()
+    {
+        return $this->spam;
     }
 }
