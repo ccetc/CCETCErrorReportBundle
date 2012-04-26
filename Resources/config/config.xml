@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+               
+    <services>
+        <service id="ccetc.errorreport.admin.errorreport" class="CCETC\ErrorReportBundle\Admin\ErrorReportAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Error Reports" label="Error Reports" />
+            <argument />
+            <argument>CCETC\ErrorReportBundle\Entity\ErrorReport</argument>
+            <argument>CCETCErrorReportBundle:ErrorReportAdmin</argument>
+        </service>
+    </services>
+    
+</container>

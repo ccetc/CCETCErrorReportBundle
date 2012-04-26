@@ -53,12 +53,7 @@ class ErrorReport
     */
     private $spam;
 
-    public function __toString()
-    {
-        return $this->getWriterEmail().' - '.$this->datetimeReported->format("m/d/y h:i:s");
-    }
-    
-    
+
     /**
      * Get id
      *
@@ -127,45 +122,5 @@ class ErrorReport
     public function getDatetimeReported()
     {
         return $this->datetimeReported;
-    }
-
-    /**
-     * Set open
-     *
-     * @param boolean $open
-     */
-    public function setOpen($open)
-    {
-        $this->open = $open;
-    }
-
-    /**
-     * Get open
-     *
-     * @return boolean 
-     */
-    public function getOpen()
-    {
-        return $this->open;
-    }
-
-    /**
-     * Set spam
-     *
-     * @param boolean $spam
-     */
-    public function setSpam($spam)
-    {
-        $this->spam = $spam;
-    }
-
-    /**
-     * Get spam
-     *
-     * @return boolean 
-     */
-    public function getSpam()
-    {
-        return $this->spam;
     }
 }

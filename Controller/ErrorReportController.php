@@ -11,7 +11,7 @@ class ErrorReportController extends Controller
 
     public function errorReportAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
-        $supportEmail = $this->get('errorReports')->supportEmail;
+        $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
         
         $form = $this->createFormBuilder();
         
@@ -67,9 +67,7 @@ class ErrorReportController extends Controller
                            
                 ;
                 $this->get('mailer')->send($message);
-
-                
-                
+		
                 $session->setFlash($flash, 'Your report has been submitted.  Thank you');
 
                 if(!$this->get('security.context')->isGranted('ROLE_USER'))
