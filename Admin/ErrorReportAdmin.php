@@ -90,6 +90,7 @@ class ErrorReportAdmin extends Admin
                 ->add('content')
                 ->add('spam')
                 ->add('open')
+                ->add('requestServer', null, array('template' => 'CCETCErrorReportBundle:ErrorReport:_showRequestServer.html.twig'))
 		;
     }
 

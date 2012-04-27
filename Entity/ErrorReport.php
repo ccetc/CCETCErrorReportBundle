@@ -41,6 +41,12 @@ class ErrorReport
      */
     private $content;
     /**
+     * @var text $requestServer
+     *
+     * @ORM\Column(name="requestServer", type="text")
+     */
+    private $requestServer;
+    /**
     * @var smallint $open
     *
     * @ORM\Column(name="open", type="boolean", nullable="true")
@@ -199,5 +205,25 @@ class ErrorReport
     public function getUserSubmittedBy()
     {
         return $this->userSubmittedBy;
+    }
+
+    /**
+     * Set requestServer
+     *
+     * @param text $requestServer
+     */
+    public function setRequestServer($requestServer)
+    {
+        $this->requestServer = $requestServer;
+    }
+
+    /**
+     * Get requestServer
+     *
+     * @return text 
+     */
+    public function getRequestServer()
+    {
+        return $this->requestServer;
     }
 }

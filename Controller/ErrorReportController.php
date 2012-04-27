@@ -24,7 +24,7 @@ class ErrorReportController extends Controller
                 return $this->handleErrorReportForm($form, $request, $flash, $redirect);
             }
         }
-
+        
         $templateParameters = array(
             'base_layout' => $baseLayout,
             'usePageHeader' => $usePageHeader,
@@ -55,6 +55,8 @@ class ErrorReportController extends Controller
             $this->handleErrorReportForm($form, $request, $flash, $redirect);
         }
 
+        $serverArray = $request->server;
+        
         $templateParameters = array(
             'errorReportForm' => $form->createView(),
             'supportEmail' => $supportEmail,
@@ -62,6 +64,7 @@ class ErrorReportController extends Controller
             'formRoute' => $formRoute,
             'directEmailSubject' => $directEmailSubject,
             'formText' => $formText,
+            'serverArray' => $serverArray
         );
 
         return $this->render('CCETCErrorReportBundle:ErrorReport:_error_report_form.html.twig', $templateParameters);
@@ -70,8 +73,6 @@ class ErrorReportController extends Controller
     public function handleErrorReportForm($form, $request, $flash, $redirect)
     {
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
-
-        $form->bindRequest($request);
 
         if($form->isValid()) {
             $session = $this->getRequest()->getSession();
@@ -82,6 +83,7 @@ class ErrorReportController extends Controller
             $errorReport->setDatetimeReported(new \DateTime());
             $errorReport->setOpen(true);
             $errorReport->setSpam(false);
+            $errorReport->setRequestServer($data['request_server']);
 
             if(!$this->get('security.context')->isGranted('ROLE_USER')) {
                 $errorReport->setWriterEmail($data['email']);
@@ -133,7 +135,8 @@ class ErrorReportController extends Controller
         }
 
         $form->add('content', 'textarea', array('label' => 'Please enter a description of this error.'));
-
+        $form->add('request_server', 'hidden');
+        
         $form->
             addValidator(new CallbackValidator(function(FormInterface $form)
             {
@@ -144,6 +147,9 @@ class ErrorReportController extends Controller
             })
         );
         
+            
+        $request_server = print_r($this->getRequest()->server, true);    
+        $form->setData(array('request_server' => $request_server));
         
         return $form->getForm();
     }

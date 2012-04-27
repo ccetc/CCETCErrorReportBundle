@@ -41,6 +41,12 @@ class ErrorReport
      */
     private $content;
     /**
+     * @var text $requestServer
+     *
+     * @ORM\Column(name="requestServer", type="text")
+     */
+    private $requestServer;
+    /**
     * @var smallint $open
     *
     * @ORM\Column(name="open", type="boolean", nullable="true")
@@ -61,7 +67,13 @@ class ErrorReport
 
     public function __toString()
     {
-        return $this->getWriterEmail().' - '.$this->datetimeReported->format("m/d/y h:i:s");
+        if($this->getUserSubmittedBy()) {
+            $string = $this->getUserSubmittedBy()->__toString();
+        } else {
+            $string = $this->getWriterEmail();
+        }
+        
+        return $string.' - '.$this->datetimeReported->format("m/d/y h:i:s");
     }
     
     
@@ -173,5 +185,45 @@ class ErrorReport
     public function getSpam()
     {
         return $this->spam;
+    }
+
+    /**
+     * Set userSubmittedBy
+     *
+     * @param Application\Sonata\UserBundle\Entity\User $userSubmittedBy
+     */
+    public function setUserSubmittedBy(\Application\Sonata\UserBundle\Entity\User $userSubmittedBy)
+    {
+        $this->userSubmittedBy = $userSubmittedBy;
+    }
+
+    /**
+     * Get userSubmittedBy
+     *
+     * @return Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUserSubmittedBy()
+    {
+        return $this->userSubmittedBy;
+    }
+
+    /**
+     * Set request_server
+     *
+     * @param text $requestServer
+     */
+    public function setRequestServer($requestServer)
+    {
+        $this->request_server = $requestServer;
+    }
+
+    /**
+     * Get request_server
+     *
+     * @return text 
+     */
+    public function getRequestServer()
+    {
+        return $this->request_server;
     }
 }
