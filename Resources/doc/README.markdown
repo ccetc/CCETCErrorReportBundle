@@ -76,7 +76,7 @@ You can emped the form in a template, provied you have a "help" route defined to
             'formText' : 'Please tell us about this error.'
         }%}
         
-### Options
+#### Options
 * formRoute: the route of your help page, used to redirect on errors.  Default: help
 * formText: the text displayed above the form before the direct e-mail link.  Default: "Having trouble with somthing?
 
