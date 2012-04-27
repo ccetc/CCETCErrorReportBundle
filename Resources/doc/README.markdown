@@ -43,6 +43,7 @@ Add the user side of the report/user relation to your user class:
 
 
 ## Use
+### Help Pages
 To include "help pages" define routes:
 
         adminHelp:
@@ -54,16 +55,16 @@ To include "help pages" define routes:
                 defaults: { _controller: CCETCErrorReportBundle:ErrorReport:errorReport, usePageHeader: false, flash: my_message, redirect: home, baseLayout: "::my_layout.html.twig", formRoute: frontendHelp }
 
 
-### Route Options
+#### Route Options
 * usePageHeader: if true, the "Help" heading will be placed in the ``page_header`` block.  Otherwise, the heading will go at the top of the content block.  Default: false
 * flash: name of the flash for the success message. Default: message
 * redirect: route to redirect to on success. Default: home
 * baseLayout: the layout to extend
 * formRoute: the name of this route, used to redirect on errors.  Default: help
 
-####Note:
-the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
+*Note*: the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
 
+### Template Embedding
 To include the form in a template:
 
         {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
