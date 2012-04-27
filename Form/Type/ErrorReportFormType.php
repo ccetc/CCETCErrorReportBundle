@@ -11,6 +11,8 @@
 
 namespace CCETC\ErrorReportBundle\Form\Type;
 
+use CCETC\ErrorReportBundle\Entity\ErrorReport;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\CallbackValidator;
@@ -19,39 +21,31 @@ use Symfony\Component\Form\FormError;
 
 class ErrorReportFormType extends AbstractType
 {
-    protected $isLoggedIn;
+    protected $currentUserIsLoggedIn;
     protected $request;
     
-    public function __construct($isLoggedIn, $request)
+    public function __construct($currentUserIsLoggedIn, $request)
     {
-        $this->isLoggedIn = $isLoggedIn;
+        $this->currentUserIsLoggedIn = $currentUserIsLoggedIn;
         $this->request = $request;
     }
     
     public function buildForm(FormBuilder $builder, array $options = array())
     {
-        if(!$this->isLoggedIn) {
-            $form->add('email', 'text', array(
+        $builder->add('content', 'textarea', array('label' => 'Please enter a description of this error.'));
+        $builder->add('request_server', 'hidden');
+
+        if(!$this->currentUserIsLoggedIn) {
+            $builder->add('writerEmail', 'text', array(
                 'label' => 'Enter your e-mail address if you would like to be contacted about this error: ',
                 'required' => false
             ));
         }
-
-        $builder->add('content', 'textarea', array('label' => 'Please enter a description of this error.'));
-        $builder->add('request_server', 'hidden');
         
-        $builder->
-            addValidator(new CallbackValidator(function(FormInterface $form)
-            {
-                if (!$form["content"]->getData())
-                {
-                    $builder->addError(new FormError('Please enter a description of this error.'));
-                }
-            })
-        );
-        
-        $request_server = print_r($this->request->server, true);    
-        $builder->setData(array('request_server' => $request_server));
+        $requestServer = print_r($this->request->server, true);
+        $errorReport = new ErrorReport;
+        $errorReport->setRequestServer($requestServer);
+        $builder->setData($errorReport);
     }
     
     public function getName()

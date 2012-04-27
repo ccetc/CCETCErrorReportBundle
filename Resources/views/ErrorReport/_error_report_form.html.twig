@@ -8,9 +8,9 @@
          <fieldset>
         {% if not is_granted('ROLE_USER') %}
             <div class="clearfix">
-                {{ form_label(errorReportForm.email) }}
+                {{ form_label(errorReportForm.writerEmail) }}
                 <div class="input">
-                    {{ form_widget(errorReportForm.email, { 'attr': {'class': 'span10'} }) }}
+                    {{ form_widget(errorReportForm.writerEmail, { 'attr': {'class': 'span10'} }) }}
                 </div>
             </div><!-- /clearfix -->
         {% endif %}

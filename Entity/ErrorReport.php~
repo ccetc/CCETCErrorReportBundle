@@ -3,6 +3,8 @@
 namespace CCETC\ErrorReportBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * CCETC\ErrorReportBundle\Entity\ErrorReport
  *
@@ -38,7 +40,11 @@ class ErrorReport
      * @var text $content
      *
      * @ORM\Column(name="content", type="text")
-     */
+     *   @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
+     *      */
     private $content;
     /**
      * @var text $requestServer
@@ -208,22 +214,22 @@ class ErrorReport
     }
 
     /**
-     * Set request_server
+     * Set requestServer
      *
      * @param text $requestServer
      */
     public function setRequestServer($requestServer)
     {
-        $this->request_server = $requestServer;
+        $this->requestServer = $requestServer;
     }
 
     /**
-     * Get request_server
+     * Get requestServer
      *
      * @return text 
      */
     public function getRequestServer()
     {
-        return $this->request_server;
+        return $this->requestServer;
     }
 }

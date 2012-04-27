@@ -7,7 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CCETC\ErrorReportBundle\Form\Type\ErrorReportFormType;
-use CCETC\ErrorReportBundle\Form\Handler\ErrorReportHandler;
+use CCETC\ErrorReportBundle\Form\Handler\ErrorReportFormHandler;
+use CCETC\ErrorReportBundle\Entity\ErrorReport;
 
 class ErrorReportController extends Controller
 {
@@ -15,16 +16,20 @@ class ErrorReportController extends Controller
     public function helpPageAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
     {
         $request = $this->getRequest();
-        $isLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');    
+        $session = $request->getSession();
+        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUserIsLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');
+        
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
         $fromEmail = $this->container->getParameter('fos_user.registration.confirmation.from_email');
 
-        $form = $this->createForm(new ErrorReportFormType($isLoggedIn, $request));
-        $handler = new ErrorReportHandler();
+        $errorReport = new ErrorReport();
+        $form = $this->createForm(new ErrorReportFormType($currentUserIsLoggedIn, $request), $errorReport);
+        $handler = new ErrorReportFormHandler($form, $request, $this->getDoctrine(), $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn);
 
-        if( $handler->process($form, $request, $flash, $redirect) ) {
+        if( $handler->formIsValid() ) {
+            $handler->process();
             $session->setFlash($flash, 'Your report has been submitted.  Thank you');
-            
             return $this->redirect($this->generateUrl($redirect));         
         } else {
             $templateParameters = array(
@@ -33,6 +38,8 @@ class ErrorReportController extends Controller
                 'formRoute' => $formRoute,
                 'flash' => $flash,
                 'redirect' => $redirect,
+                'form' => $form,
+                'handler' => $handler
             );
 
             if(class_exists('Sonata\AdminBundle\SonataAdminBundle')) {
@@ -45,15 +52,18 @@ class ErrorReportController extends Controller
         }
     }
 
-    public function errorReportFormAction($formRoute = 'help', $formText = 'Having trouble with something?')
+    public function errorReportFormAction($formRoute = 'help', $formText = 'Having trouble with something?', $form = null, $handler = null)
     {
         $request = $this->get('request');
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
         $directEmailSubject = $this->container->getParameter('ccetc_error_report.direct_email_subject');
-        $isLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');        
-
-        $form = $this->createForm(new ErrorReportFormType($isLoggedIn, $request));
         
+        if(!$form) {            
+            $currentUserIsLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');
+            $errorReport = new ErrorReport();
+            $form = $this->createForm(new ErrorReportFormType($currentUserIsLoggedIn, $request), $errorReport);
+        } 
+
         $templateParameters = array(
             'errorReportForm' => $form->createView(),
             'supportEmail' => $supportEmail,

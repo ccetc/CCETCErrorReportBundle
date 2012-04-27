@@ -14,82 +14,94 @@ namespace CCETC\ErrorReportBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
-class ErrorReportHandler
+class ErrorReportFormHandler
 {
 
     protected $request;
     protected $form;
-
-    public function __construct(Form $form, Request $request)
+    protected $doctrine;
+    protected $mailer;
+    protected $supportEmail;
+    protected $fromEmail;
+    protected $currentUser;
+    protected $currentUserIsLoggedIn;
+    
+    public function __construct(Form $form, Request $request, $doctrine, $mailer, $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn)
     {
         $this->form = $form;
         $this->request = $request;
+        $this->doctrine = $doctrine;
+        $this->mailer = $mailer;
+        $this->supportEmail = $supportEmail;
+        $this->fromEmail = $fromEmail;
+        $this->currentUser = $currentUser;
+        $this->currentUserIsLoggedIn = $currentUserIsLoggedIn;
     }
 
-    public function process($supportEmail, $fromEmail)
+    public function process()
+    {
+        if($this->formIsValid()) {
+            $this->onSuccess();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function formIsValid()
     {
         if('POST' === $this->request->getMethod()) {
             $this->form->bindRequest($this->request);
 
             if($this->form->isValid()) {
-                $this->onSuccess($supportEmail, $fromEmail);
-
                 return true;
             }
         }
-
         return false;
     }
 
-    protected function onSuccess($supportEmail, $fromEmail)
+    protected function onSuccess()
     {
         $session = $this->request->getSession();
-        $data = $this->form->getData();
+        $errorReport = $this->form->getData();
 
-        $errorReport = new \CCETC\ErrorReportBundle\Entity\ErrorReport();
-        $errorReport->setContent($data['content']);
         $errorReport->setDatetimeReported(new \DateTime());
         $errorReport->setOpen(true);
         $errorReport->setSpam(false);
-        $errorReport->setRequestServer($data['request_server']);
 
-        if(!$this->get('security.context')->isGranted('ROLE_USER')) {
-            $errorReport->setWriterEmail($data['email']);
-        }
-        else {
-            $user = $this->get('security.context')->getToken()->getUser();
-            $errorReport->setUserSubmittedBy($user);
+        if($this->currentUserIsLoggedIn) {
+            $errorReport->setUserSubmittedBy($this->currentUser);
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getEntityManager();
         $em->persist($errorReport);
         $em->flush();
 
-        $this->sendSupportEmail($fromEmail, $supportEmail, $errorRreport);
+        $this->sendSupportEmail($errorReport);
     }
 
-    public function sendSupportEmail($fromEmail, $supportEmail, $errorRreport)
+    public function sendSupportEmail($errorReport)
     {
         if($errorReport->getUserSubmittedBy()) {
             $who = 'A user named "' . $errorReport->getUserSubmittedBy()->__toString() . '" (email: <a href="' . $errorReport->getUserSubmittedBy()->getEmail() . '">' . $errorReport->getUserSubmittedBy()->getEmail() . '</a>)';            
         } else {
             $who = 'An anonymous user';
-            if($errorReport->getEmail()) {
-                $who .= ' (email: <a href="' . $errorReport->getEmail() . '">' . $errorReport->getEmail() . '</a>)';
+            if($errorReport->getWriterEmail()) {
+                $who .= ' (email: <a href="' . $errorReport->getWriterEmail() . '">' . $errorReport->getWriterEmail() . '</a>)';
             }
         }
         
         $message = \Swift_Message::newInstance()
                 ->setSubject('Error Report Submitted')
-                ->setFrom($fromEmail)
-                ->setTo($supportEmail)
+                ->setFrom($this->fromEmail)
+                ->setTo($this->supportEmail)
                 ->setContentType('text/html')
                 ->setBody('<html>
                        ' . $who . ' submitted this error report on ' . $errorReport->getDatetimeReported()->format('Y-m-d H:i:s') . '.<br/><br/>
                         Content: <br/>' . $errorReport->getContent() . '</html>')
 
         ;
-        $this->get('mailer')->send($message);
+        $this->mailer->send($message);
     }
 
 }

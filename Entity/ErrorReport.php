@@ -3,6 +3,8 @@
 namespace CCETC\ErrorReportBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * CCETC\ErrorReportBundle\Entity\ErrorReport
  *
@@ -38,6 +40,7 @@ class ErrorReport
      * @var text $content
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Email()
      */
     private $content;
     /**
