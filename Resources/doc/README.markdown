@@ -36,6 +36,10 @@ Add the following lines to your services config.yml:
 		ccetc_error_report:
 		  support_email: haggertypat@gmail.com
 		  direct_email_subject: Template+Error+Report
+		  
+#### Options
+* support_email - email used to error report notices, and for the direct e-mail link on the form
+* subject for the direct e-mail link (default: Error Report)
 
 Add the user side of the report/user relation to your user class:
 
