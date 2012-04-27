@@ -1,0 +1,28 @@
+{% extends base_layout %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% if usePageHeader %}
+        {% block page_header %}
+            Help
+        {% endblock %}
+{% endif %}
+
+{% block content %}
+    <div>
+    {% if not usePageHeader %}
+        <h1>
+            Help
+        </h1>
+    {% endif %}
+    </div>
+    {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
+        'usePageHeader' : usePageHeader,
+        'flash' : flash,
+        'redirect' : redirect,
+        'formRoute' : formRoute
+    }%}
+
+{% endblock %}
