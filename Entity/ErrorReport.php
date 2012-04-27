@@ -40,7 +40,7 @@ class ErrorReport
      * @var text $content
      *
      * @ORM\Column(name="content", type="text")
-     * @Assert\Email()
+     * @Assert\NotBlank()
      */
     private $content;
     /**

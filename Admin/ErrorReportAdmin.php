@@ -21,7 +21,7 @@ class ErrorReportAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-                ->add('userSubmittedBy', 'string', array('label' => 'Submitted By', 'template' => 'CCETCErrorReportBundle:ErrorReport:_list_field_submittedBy.html.twig'))
+                ->add('userSubmittedBy', 'string', array('label' => 'Submitted By', 'template' => 'CCETCErrorReportBundle:ErrorReport:_list_field_submitted_by.html.twig'))
                 ->add('datetimeReported')
                 ->add('content')		
                 ->add('spam')
@@ -90,7 +90,7 @@ class ErrorReportAdmin extends Admin
                 ->add('content')
                 ->add('spam')
                 ->add('open')
-                ->add('requestServer', null, array('template' => 'CCETCErrorReportBundle:ErrorReport:_showRequestServer.html.twig'))
+                ->add('requestServer', null, array('template' => 'CCETCErrorReportBundle:ErrorReport:_show_request_server.html.twig'))
 		;
     }
 

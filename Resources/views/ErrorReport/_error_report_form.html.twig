@@ -1,9 +1,10 @@
 <div>
     <h3>{{ formText }} <small>You can <a href="mailto:{{ supportEmail }}?subject={{ directEmailSubject }}">contact us directly</a>, or submit an error report below.</small></h3>
-
     <form id="error-report-form" class="form-stacked span10 offset3" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
         {% if form_errors(errorReportForm) %}
-            <div class="alert-message">{{ form_errors(errorReportForm) }}</div>
+            <div class="alert-message">
+                {{ form_errors(errorReportForm) }}
+            </div>
         {% endif %}
          <fieldset>
         {% if not is_granted('ROLE_USER') %}
@@ -20,13 +21,19 @@
             <div class="input">
                 {{ form_widget(errorReportForm.content, { 'attr': {'class': 'span10'} }) }}
             </div>
+            {% if form_errors(errorReportForm.content) %}
+                <div class="alert-message">
+                    {{ form_errors(errorReportForm.content) }}                    
+                </div>
+            {% endif %}
+ 
         </div><!-- /clearfix -->
         </fieldset>
 
         {{ form_rest(errorReportForm) }}
 
         <div class="actions">
-            <input type="submit" formnovalidate="formnovalidate"  class="btn large primary" value="Submit" />
+            <input type="submit" class="btn large primary" value="Submit" />
         </div>
 
     </form>

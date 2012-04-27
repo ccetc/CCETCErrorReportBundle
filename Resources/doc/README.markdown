@@ -69,18 +69,16 @@ To include "help pages" define routes:
 *Note*: the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
 
 ### Template Embedding
-To include the form in a template:
+You can emped the form in a template, but this requires that you have a "help" page to process it.  If there are errors, the users will be redirected to help page to finish their submission.  To include the form in a template:
 
         {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
-            'usePageHeader' : true,
-            'flash' : 'sonata_flash_success',
-            'redirect' : 'home',
             'formRoute' : 'help',
             'formText' : 'Please tell us about this error.'
         }%}
         
 ### Options
 All the same as route options with the addition of:
+* formRoute: the route of your help page, used to redirect on errors.  Default: help
 * formText - the text displayed above the form before the direct e-mail link.  Default: "Having trouble with somthing?
 
 

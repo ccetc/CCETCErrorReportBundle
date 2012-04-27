@@ -37,23 +37,14 @@ class ErrorReportFormHandler
         $this->currentUser = $currentUser;
         $this->currentUserIsLoggedIn = $currentUserIsLoggedIn;
     }
-
-    public function process()
-    {
-        if($this->formIsValid()) {
-            $this->onSuccess();
-            return true;
-        } else {
-            return false;
-        }
-    }
     
-    public function formIsValid()
+    public function process()
     {
         if('POST' === $this->request->getMethod()) {
             $this->form->bindRequest($this->request);
 
             if($this->form->isValid()) {
+                $this->onSuccess();
                 return true;
             }
         }

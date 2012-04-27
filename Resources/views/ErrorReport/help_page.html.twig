@@ -19,12 +19,8 @@
     {% endif %}
     </div>
     {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
-        'usePageHeader' : usePageHeader,
-        'flash' : flash,
-        'redirect' : redirect,
         'formRoute' : formRoute,
         'form' : form,
-        'handler' : handler
     }%}
 
 {% endblock %}

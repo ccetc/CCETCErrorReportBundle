@@ -19,7 +19,6 @@ class ErrorReportController extends Controller
         $session = $request->getSession();
         $currentUser = $this->get('security.context')->getToken()->getUser();
         $currentUserIsLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');
-        
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
         $fromEmail = $this->container->getParameter('fos_user.registration.confirmation.from_email');
 
@@ -27,8 +26,7 @@ class ErrorReportController extends Controller
         $form = $this->createForm(new ErrorReportFormType($currentUserIsLoggedIn, $request), $errorReport);
         $handler = new ErrorReportFormHandler($form, $request, $this->getDoctrine(), $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn);
 
-        if( $handler->formIsValid() ) {
-            $handler->process();
+        if( $handler->process() ) {
             $session->setFlash($flash, 'Your report has been submitted.  Thank you');
             return $this->redirect($this->generateUrl($redirect));         
         } else {
@@ -36,10 +34,9 @@ class ErrorReportController extends Controller
                 'base_layout' => $baseLayout,
                 'usePageHeader' => $usePageHeader,
                 'formRoute' => $formRoute,
-                'flash' => $flash,
-                'redirect' => $redirect,
                 'form' => $form,
-                'handler' => $handler
+                'formText' => 'Having trouble?',
+                'errorReportForm' => $form
             );
 
             if(class_exists('Sonata\AdminBundle\SonataAdminBundle')) {
@@ -52,7 +49,7 @@ class ErrorReportController extends Controller
         }
     }
 
-    public function errorReportFormAction($formRoute = 'help', $formText = 'Having trouble with something?', $form = null, $handler = null)
+    public function errorReportFormAction($formRoute = 'help', $formText = 'Having trouble with something?', $form = null)
     {
         $request = $this->get('request');
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
