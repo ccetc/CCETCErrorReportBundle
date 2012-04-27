@@ -64,12 +64,12 @@ To include "help pages" define routes:
 * flash: name of the flash for the success message. Default: message
 * redirect: route to redirect to on success. Default: home
 * baseLayout: the layout to extend
-* formRoute: the name of this route, used to redirect on errors.  Default: help
+* formRoute: the route of your help page, used to redirect on errors.  Default: help
 
 *Note*: the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
 
 ### Template Embedding
-You can emped the form in a template, but this requires that you have a "help" page to process it.  If there are errors, the users will be redirected to help page to finish their submission.  To include the form in a template:
+You can emped the form in a template, provied you have a "help" route defined to process it.  If there are errors, the users will be redirected to help page to finish their submission.  To include the form in a template:
 
         {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
             'formRoute' : 'help',
@@ -77,9 +77,8 @@ You can emped the form in a template, but this requires that you have a "help" p
         }%}
         
 ### Options
-All the same as route options with the addition of:
 * formRoute: the route of your help page, used to redirect on errors.  Default: help
-* formText - the text displayed above the form before the direct e-mail link.  Default: "Having trouble with somthing?
+* formText: the text displayed above the form before the direct e-mail link.  Default: "Having trouble with somthing?
 
 
 ## Documentation
