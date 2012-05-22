@@ -14,7 +14,7 @@ class ErrorReportAdmin extends Admin
 {
     protected $maxPerPage = 20;
     
-    protected $entityIconPath = 'bundles/sonataadmin/famfamfam/bullet_error.png';
+    protected $entityIconPath = 'bundles/sonataadmin/famfamfam/error.png';
 
     protected $entityLabelPlural = "Error Reports";
     
