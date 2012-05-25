@@ -18,7 +18,7 @@ The form can be rendered in any template (frontend/backend/error pages), but all
 To install as a Symfony vendor, add the following lines to the file ``deps``:
 
         [ErrorReportBundle]
-                git=https://github.com/CCETC/ErrorReportBundle.git
+                git=https://github.com/CCETC/CCETCErrorReportBundle.git
                 target=/bundles/CCETC/ErrorReportBundle
                 
 
