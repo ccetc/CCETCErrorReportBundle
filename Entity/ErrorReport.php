@@ -70,13 +70,17 @@ class ErrorReport
 
     public function __toString()
     {
-        if($this->getUserSubmittedBy()) {
-            $string = $this->getUserSubmittedBy()->__toString();
+        if($this->getId()) {
+            if($this->getUserSubmittedBy()) {
+                $string = $this->getUserSubmittedBy()->__toString();
+            } else {
+                $string = $this->getWriterEmail();
+            }
+
+            return $string.' - '.$this->datetimeReported->format("m/d/y h:i:s");
         } else {
-            $string = $this->getWriterEmail();
+            return '';
         }
-        
-        return $string.' - '.$this->datetimeReported->format("m/d/y h:i:s");
     }
     
     

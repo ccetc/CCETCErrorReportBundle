@@ -14,7 +14,7 @@ class ErrorReportAdmin extends Admin
 {
     protected $maxPerPage = 20;
     
-    protected $entityIconPath = 'bundles/sonataadmin/famfamfam/error.png';
+    protected $entityIconPath = 'icon-attention';
 
     protected $entityLabelPlural = "Error Reports";
     
@@ -24,8 +24,8 @@ class ErrorReportAdmin extends Admin
                 ->add('userSubmittedBy', 'string', array('label' => 'Submitted By', 'template' => 'CCETCErrorReportBundle:ErrorReport:_list_field_submitted_by.html.twig'))
                 ->add('datetimeReported')
                 ->add('content')		
-                ->add('spam')
-                ->add('open')
+                ->add('spam', null, array('editable' => true))
+                ->add('open', null, array('editable' => true))
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'view' => array(),
@@ -93,5 +93,19 @@ class ErrorReportAdmin extends Admin
                 ->add('requestServer', null, array('template' => 'CCETCErrorReportBundle:ErrorReport:_show_request_server.html.twig'))
 		;
     }
+    public function prePersist($errorReport)
+    {
+        if(!$errorReport->getDatetimeReported()) $errorReport->setDatetimeReported(new \DateTime());
+        
+        $errorReport->setRequestServer(print_r($this->configurationPool->getContainer()->get('request')->server, true));
+        $errorReport->setOpen(true);
+        
+        if( $this->configurationPool->getContainer()->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->configurationPool->getContainer()->get('security.context')->getToken()->getUser();
+            if(!$errorReport->getUserSubmittedBy()) $errorReport->setUserSubmittedBy($user);
+        }
+            
+        parent::prePersist($errorReport);
+    }    
 
 }
