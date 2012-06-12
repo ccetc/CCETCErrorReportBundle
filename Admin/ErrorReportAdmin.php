@@ -14,7 +14,7 @@ class ErrorReportAdmin extends Admin
 {
     protected $maxPerPage = 20;
     
-    protected $entityIconPath = 'icon-attention';
+    protected $entityIcon = 'icon-attention';
 
     protected $entityLabelPlural = "Error Reports";
     
