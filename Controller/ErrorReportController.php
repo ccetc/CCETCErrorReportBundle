@@ -21,10 +21,11 @@ class ErrorReportController extends Controller
         $currentUserIsLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
         $fromEmail = $this->container->getParameter('fos_user.registration.confirmation.from_email');
-
+        $errorReportAdmin = $this->container->get('ccetc.errorreport.admin.errorreport');
+        
         $errorReport = new ErrorReport();
         $form = $this->createForm(new ErrorReportFormType($currentUserIsLoggedIn, $request), $errorReport);
-        $handler = new ErrorReportFormHandler($form, $request, $this->getDoctrine(), $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn);
+        $handler = new ErrorReportFormHandler($form, $request, $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn, $errorReportAdmin);
 
         if( $handler->process() ) {
             $session->setFlash($flash, 'Your report has been submitted.  Thank you');
