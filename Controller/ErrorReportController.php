@@ -17,6 +17,7 @@ class ErrorReportController extends Controller
     {
         $request = $this->getRequest();
         $session = $request->getSession();
+        $entityManager = $this->getDoctrine()->getEntityManager();
         $currentUser = $this->get('security.context')->getToken()->getUser();
         $currentUserIsLoggedIn = $this->get('security.context')->isGranted('ROLE_USER');
         $supportEmail = $this->container->getParameter('ccetc_error_report.support_email');
@@ -25,7 +26,7 @@ class ErrorReportController extends Controller
         
         $errorReport = new ErrorReport();
         $form = $this->createForm(new ErrorReportFormType($currentUserIsLoggedIn, $request), $errorReport);
-        $handler = new ErrorReportFormHandler($form, $request, $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn, $errorReportAdmin);
+        $handler = new ErrorReportFormHandler($form, $request, $this->get('mailer'), $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn, $entityManager);
 
         if( $handler->process() ) {
             $session->setFlash($flash, 'Your report has been submitted.  Thank you');

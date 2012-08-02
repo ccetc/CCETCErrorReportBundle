@@ -24,9 +24,9 @@ class ErrorReportFormHandler
     protected $fromEmail;
     protected $currentUser;
     protected $currentUserIsLoggedIn;
-    protected $errorReportAdmin;
+    protected $entityManager;
     
-    public function __construct(Form $form, Request $request, $mailer, $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn, $errorReportAdmin)
+    public function __construct(Form $form, Request $request, $mailer, $supportEmail, $fromEmail, $currentUser, $currentUserIsLoggedIn, $entityManager)
     {
         $this->form = $form;
         $this->request = $request;
@@ -35,7 +35,7 @@ class ErrorReportFormHandler
         $this->fromEmail = $fromEmail;
         $this->currentUser = $currentUser;
         $this->currentUserIsLoggedIn = $currentUserIsLoggedIn;
-        $this->errorReportAdmin = $errorReportAdmin;
+        $this->entityManager = $entityManager;
     }
     
     public function process()
@@ -64,8 +64,9 @@ class ErrorReportFormHandler
             $errorReport->setUserSubmittedBy($this->currentUser);
         }
 
-        $this->errorReportAdmin->create($errorReport);
-
+        $this->entityManager->persist($errorReport);
+        $this->entityManager->flush();
+        
         $this->sendSupportEmail($errorReport);
     }
 
