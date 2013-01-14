@@ -25,6 +25,7 @@ class CCETCErrorReportExtension extends Extension
             $container->setParameter('ccetc_error_report.support_email', $config['support_email']);
         }
         $container->setParameter('ccetc_error_report.direct_email_subject', $config['direct_email_subject']);        
+        $container->setParameter('ccetc_error_report.additional_template', $config['additional_template']);        
     }
 
 }

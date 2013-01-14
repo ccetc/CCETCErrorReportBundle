@@ -41,6 +41,10 @@ class ErrorReportController extends Controller
                 'errorReportForm' => $form
             );
 
+            if($this->container->getParameter('ccetc_error_report.additional_template')) {
+                $templateParameters['additionalTemplate'] = $this->container->getParameter('ccetc_error_report.additional_template');
+            }
+        
             if(class_exists('Sonata\AdminBundle\SonataAdminBundle')) {
                 $adminPool = $this->container->get('sonata.admin.pool');
                 $templateParameters['admin_pool'] = $adminPool;

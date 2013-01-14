@@ -18,6 +18,11 @@
         </h1>
     {% endif %}
     </div>
+        
+    {% if additionalTemplate is defined %}
+        {% include additionalTemplate %}
+    {% endif %}
+        
     {% render "CCETCErrorReportBundle:ErrorReport:errorReportForm" with {
         'formRoute' : formRoute,
         'form' : form,
