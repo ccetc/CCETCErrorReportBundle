@@ -15,16 +15,9 @@ The bundle includes a simple help page with the form embedded.
 The form can be rendered in any template (frontend/backend/error pages), but all submissions routes to the help page.
 
 ## Installation
-To install as a Symfony vendor, add the following lines to the file ``deps``:
+Add to composer:
 
-        [ErrorReportBundle]
-                git=https://github.com/CCETC/CCETCErrorReportBundle.git
-                target=/bundles/CCETC/ErrorReportBundle
-                
-
-If you are using git, you can instead add them as submodules:
-
-        git submodule add git@github.com:CCETC/ErrorReportBundle.git vendor/bundles/CCETC/ErrorReportBundle
+        "ccetc/error-report-bundle" : "dev-master"
 
 Install assets:
 
