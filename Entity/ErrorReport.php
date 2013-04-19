@@ -25,7 +25,7 @@ class ErrorReport
     /**
      * @var string $writer_email
      *
-     * @ORM\Column(name="writerEmail", type="string", length=255, nullable="true")
+     * @ORM\Column(name="writerEmail", type="string", length=255, nullable=true)
      */
     private $writerEmail;
 
@@ -52,13 +52,13 @@ class ErrorReport
     /**
     * @var smallint $open
     *
-    * @ORM\Column(name="open", type="boolean", nullable="true")
+    * @ORM\Column(name="open", type="boolean", nullable=true)
     */
     private $open;
     /**
     * @var smallint $spam
     *
-    * @ORM\Column(name="spam", type="boolean", nullable="true")
+    * @ORM\Column(name="spam", type="boolean", nullable=true)
     */
     private $spam;
     
