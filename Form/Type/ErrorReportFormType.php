@@ -14,7 +14,7 @@ namespace CCETC\ErrorReportBundle\Form\Type;
 use CCETC\ErrorReportBundle\Entity\ErrorReport;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
@@ -30,7 +30,7 @@ class ErrorReportFormType extends AbstractType
         $this->request = $request;
     }
     
-    public function buildForm(FormBuilder $builder, array $options = array())
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('content', 'textarea', array('label' => 'Please enter a description of this error.'));
         $builder->add('request_server', 'hidden');

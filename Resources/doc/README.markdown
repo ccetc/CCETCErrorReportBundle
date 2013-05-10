@@ -1,5 +1,7 @@
 # CCETCErrorReportBundle - README
 
+*NOTE* - this branch, ``MyCCE`` is for use with that specific project.
+
 Provides an interface for the submission of simple text+e-mail "error reports".
 Used on all front and back ends of CCETC web applications.
 

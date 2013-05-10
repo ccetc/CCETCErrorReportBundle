@@ -1,6 +1,6 @@
 <div>
     <h3>{{ formText }} <small>You can <a href="mailto:{{ supportEmail }}?subject={{ directEmailSubject }}">contact us directly</a>, or submit an error report below.</small></h3>
-    <form id="error-report-form" class="form-stacked span10 offset3" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
+    <form id="error-report-form" class="form-stacked span8" method="POST" action="{{ path(formRoute) }} {{ form_enctype(errorReportForm) }}">
         {% if form_errors(errorReportForm) %}
             <div class="alert-message">
                 {{ form_errors(errorReportForm) }}
@@ -8,19 +8,14 @@
         {% endif %}
          <fieldset>
         {% if not is_granted('ROLE_USER') %}
-            <div class="clearfix">
-                {{ form_label(errorReportForm.writerEmail) }}
-                <div class="input">
-                    {{ form_widget(errorReportForm.writerEmail, { 'attr': {'class': 'span10'} }) }}
-                </div>
-            </div><!-- /clearfix -->
+            {{ form_label(errorReportForm.writerEmail) }}
+            {{ form_widget(errorReportForm.writerEmail, { 'attr': {'class': 'span8'} }) }}
         {% endif %}
 
         <div class="clearfix">
             {{ form_label(errorReportForm.content) }}
-            <div class="input">
-                {{ form_widget(errorReportForm.content, { 'attr': {'class': 'span10'} }) }}
-            </div>
+            {{ form_widget(errorReportForm.content, { 'attr': {'class': 'span8'} }) }}
+                
             {% if form_errors(errorReportForm.content) %}
                 <div class="alert-message">
                     {{ form_errors(errorReportForm.content) }}                    
@@ -32,9 +27,9 @@
 
         {{ form_rest(errorReportForm) }}
 
-        <div class="actions">
-            <input type="submit" class="btn large primary" value="Submit" />
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Submit" />
         </div>
-
     </form>
+    <div style="clear: both; line-height: 0px;">&nbsp;</div>
 </div>
