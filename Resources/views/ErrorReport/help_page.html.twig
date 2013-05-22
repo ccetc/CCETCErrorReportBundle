@@ -1,5 +1,9 @@
 {% extends base_layout %}
 
+{% if includeTitle %}
+    {% block title %}Help{% endblock %}
+{% endif %}
+
 {% block stylesheets %}
     {{ parent() }}
 {% endblock %}

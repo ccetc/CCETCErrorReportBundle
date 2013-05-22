@@ -60,6 +60,7 @@ To include "help pages" define routes:
 * redirect: route to redirect to on success. Default: home
 * baseLayout: the layout to extend
 * formRoute: the route of your help page, used to redirect on errors.  Default: help
+* includeTitle: add "Help" to the title block
 
 *Note*: the base layout that the error report form extends *must* have a block called "stylesheets" and a block called "content"
 

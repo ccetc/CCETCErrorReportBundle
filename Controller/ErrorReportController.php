@@ -13,7 +13,7 @@ use CCETC\ErrorReportBundle\Entity\ErrorReport;
 class ErrorReportController extends Controller
 {
 
-    public function helpPageAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help')
+    public function helpPageAction($usePageHeader = false, $flash = 'alert-message', $redirect = 'home', $baseLayout, $formRoute = 'help', $includeTitle = false)
     {
         $request = $this->getRequest();
         $session = $request->getSession();
@@ -38,7 +38,8 @@ class ErrorReportController extends Controller
                 'formRoute' => $formRoute,
                 'form' => $form,
                 'formText' => 'Having trouble?',
-                'errorReportForm' => $form
+                'errorReportForm' => $form,
+                'includeTitle' => $includeTitle
             );
 
             if($this->container->getParameter('ccetc_error_report.additional_template')) {
