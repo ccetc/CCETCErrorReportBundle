@@ -62,7 +62,7 @@ class ErrorReport
     */
     private $spam;
     
-    /** @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="errorReportsSubmitted")
+    /** @ORM\ManyToOne(targetEntity="MyCCE\AppBundle\Entity\User", inversedBy="errorReportsSubmitted")
     *  @ORM\JoinColumn(name="userSubmittedBy_id", referencedColumnName="id", onDelete="SET NULL") 
     */
     protected $userSubmittedBy;
