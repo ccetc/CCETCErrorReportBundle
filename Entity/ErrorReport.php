@@ -197,9 +197,9 @@ class ErrorReport
     /**
      * Set userSubmittedBy
      *
-     * @param Application\Sonata\UserBundle\Entity\User $userSubmittedBy
+     * @param MyCCE\AppBundle\Entity\User $userSubmittedBy
      */
-    public function setUserSubmittedBy(\Application\Sonata\UserBundle\Entity\User $userSubmittedBy)
+    public function setUserSubmittedBy(\MyCCE\AppBundle\Entity\User $userSubmittedBy)
     {
         $this->userSubmittedBy = $userSubmittedBy;
     }
